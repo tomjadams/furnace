@@ -46,9 +46,10 @@ object Main {
   }
 
   lazy val newLines = List('\n', '\r')
-  
+
   def streamToGeneSequence(s: Stream[Byte]): GeneSequence = geneSequence(readSequence(s, 40).foldLeft(Nil: List[Base])(_ + byteToBase(_)))
 
+  // TODO Need to take and drop from the stream
   private def readSequence(s: Stream[Byte], howMany: Int): Stream[Byte] = removeHeader(s).filter(!newLines.contains(_)).take(howMany)
 
   private def removeHeader(s: Stream[Byte]) = s
