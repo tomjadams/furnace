@@ -1,4 +1,4 @@
-package au.id.adams.mesh.sequence
+package au.id.adams.furnace.sequence
 
 import Base._
 

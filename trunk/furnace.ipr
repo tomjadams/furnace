@@ -243,7 +243,7 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mesh.iml" filepath="$PROJECT_DIR$/mesh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/furnace.iml" filepath="$PROJECT_DIR$/furnace.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="scala" project-jdk-type="scala sdk">

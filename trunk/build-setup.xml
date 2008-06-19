@@ -2,8 +2,8 @@
 <project name="obi-setup" default="default" basedir=".">
 
   <property name="project.longname" value="Mesh Grid-Based BLAST"/>
-  <property name="project.midname" value="mesh"/>
-  <property name="project.shortname" value="mesh"/>
+  <property name="project.midname" value="furnace"/>
+  <property name="project.shortname" value="furnace"/>
   <property name="project.version.major" value="0"/>
   <property name="project.version.minor" value="0.1"/>
   <property name="version-status" value=""/>
@@ -12,7 +12,7 @@
   <property name="project.zip" value="${project.shortname}-${project.version.full}.zip"/>
   <property name="src.zip" value="${project.shortname}-${project.version.full}-src.zip"/>
   <property name="scaladoc.zip" value="${project.shortname}-${project.version.full}-scaladoc.zip"/>
-  <property name="main.package.name" value="au.id.adams.mesh"/>
+  <property name="main.package.name" value="au.id.adams.furnace"/>
   <property name="main.class.name" value="${main.package.name}.SequenceSearcher"/>
 
   <property name="build.dir" value="build"/>

@@ -1,4 +1,4 @@
-package au.id.adams.mesh
+package au.id.adams.furnace
 
 import file.io.FilePath._
 import file.io.ReadableFile._

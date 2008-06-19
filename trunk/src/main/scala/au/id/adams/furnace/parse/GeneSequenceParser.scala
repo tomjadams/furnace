@@ -1,4 +1,4 @@
-package au.id.adams.mesh.parse
+package au.id.adams.furnace.parse
 
 import java.lang.System._
 import java.util.regex.Pattern._
