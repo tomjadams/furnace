@@ -2,6 +2,8 @@ package au.id.adams.furnace.sequence
 
 sealed trait Base {
   def code: Char
+
+  override def toString = code.toString
 }
 
 private case object A extends Base {
@@ -32,7 +34,7 @@ object Base {
     case 'C' => C
     case 'G' => G
     case 'T' => T
-//    case code => error("Unknown base: '" + code + "'")
+    //    case code => error("Unknown base: '" + code + "'")
     case b => Other(b)
   }
 

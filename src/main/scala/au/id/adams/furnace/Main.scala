@@ -32,7 +32,7 @@ object Main {
 
     //    val sequences = GeneSequenceParser.parse((inputSequence: File).slurp, sliceSize)
     println(sequences.size + " sequences")
-    //    sequences.foreach(println)
+    sequences.foreach(println)
     //    val completeSequences = sequences.filter(_.sequence.size == sliceSize)
     //    println("Found " + sequences.size + " sequences in input file, discarding " + (sequences.size - completeSequences.size) + " partial trailing sequence")
     //    println(completeSequences.size + " complete sequences")
