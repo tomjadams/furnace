@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="mesh" default="all" basedir=".">
+<project name="furnace" default="all" basedir=".">
 
   <import file="build-setup.xml"/>
 

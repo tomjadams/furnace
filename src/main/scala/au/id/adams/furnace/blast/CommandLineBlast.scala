@@ -1,4 +1,4 @@
-package au.id.adams.mesh.blast
+package au.id.adams.furnace.blast
 
 // blastall -p blastn -d ecoli.nt -i test.txt -o test.out.
 object CommandLineBlast {
