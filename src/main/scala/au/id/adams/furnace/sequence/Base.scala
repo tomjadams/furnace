@@ -30,6 +30,7 @@ object Base {
     case 'C' => C
     case 'G' => G
     case 'T' => T
+    case code => error("Unknown base: '" + code + "'")
   }
 
   implicit def byteToBase(b: Byte): Base = b.toChar
