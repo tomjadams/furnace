@@ -43,7 +43,7 @@ object Main {
   def foo(f: File, sliceSize: Int) = {
 //    f.read(Nothing, byteToBase)
 //    val sequence = f.read(0, streamToGeneSequence)
-    val sequence = f.read(List('G'): GeneSequence, xxx)
+    val sequence = f.read(Nil: GeneSequence, xxx)
     List(sequence)
   }
 
