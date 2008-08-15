@@ -1,4 +1,4 @@
-package au.id.adams.furnace
+package com.googlecode.furnace
 
 import file.io.FilePath._
 import file.io.ReadableFile._
@@ -41,9 +41,13 @@ object Main {
   }
 
   def foo(f: File, sliceSize: Int) = {
-    val sequence = f.read(streamToGeneSequence)
+//    f.read(Nothing, byteToBase)
+//    val sequence = f.read(0, streamToGeneSequence)
+    val sequence = f.read(List('G'): GeneSequence, xxx)
     List(sequence)
   }
+
+  def xxx(g: GeneSequence, b: Byte): GeneSequence = g
 
   lazy val newLines = List('\n', '\r')
 

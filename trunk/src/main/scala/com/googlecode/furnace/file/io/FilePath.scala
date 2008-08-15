@@ -1,4 +1,4 @@
-package au.id.adams.file.io
+package com.googlecode.furnace.file.io
 
 sealed trait FilePath
 
@@ -15,5 +15,5 @@ object FilePath {
 
   implicit def filePathToFile(filePath: FilePath): File = new File(filePath)
 
-  implicit def filePathToScalazFile(filePath: FilePath): scalaz.io.File = new scalaz.io.File(filePath)
+  implicit def filePathToScalazFile(filePath: FilePath): scalaz.io.File = scalaz.io.File.file(filePath)
 }

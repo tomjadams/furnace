@@ -1,4 +1,4 @@
-package au.id.adams.furnace.sequence
+package com.googlecode.furnace.sequence
 
 sealed trait Base {
   def code: Char

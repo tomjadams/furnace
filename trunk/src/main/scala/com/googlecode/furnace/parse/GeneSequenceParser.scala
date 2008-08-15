@@ -1,4 +1,4 @@
-package au.id.adams.furnace.parse
+package com.googlecode.furnace.parse
 
 import java.lang.System._
 import java.util.regex.Pattern._

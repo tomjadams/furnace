@@ -12,22 +12,36 @@
       <sourceFolder url="file://$MODULE_DIR$/src/spec/scala" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
+    <orderEntry type="library" name="scala-2.7.1" level="application" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="Scalaz">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scalaz/scalaz-2.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/scalaz/scalaz-3.0.jar!/" />
         </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/etc/lib-doc/scalaz-doc-2.4.zip!/" />
-        </JAVADOC>
+        <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/etc/lib-src/scalaz-src-2.4.zip!/" />
+          <root url="jar://$MODULE_DIR$/etc/lib-src/scalaz-2.3-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntryProperties />
+    <orderEntry type="module-library">
+      <library name="Instinct">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/instinct/jmock-2.5.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/cglib-nodep-2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/jmock-legacy-2.5.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/hamcrest-all-1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/functionaljava-2.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/objenesis-1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/junit-dep-4.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/instinct-0.1.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
   <component name="copyright">
     <Base>

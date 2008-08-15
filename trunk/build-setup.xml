@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="obi-setup" default="default" basedir=".">
 
-  <property name="project.longname" value="Mesh Grid-Based BLAST"/>
+  <property name="project.longname" value="Furnace - Grid-Based BLAST"/>
   <property name="project.midname" value="furnace"/>
   <property name="project.shortname" value="furnace"/>
   <property name="project.version.major" value="0"/>
@@ -37,6 +37,8 @@
   <property name="blast.dir" value="/opt/blast"/>
   <property name="blast.bin.dir" value="${blast.dir}/bin"/>
 
+  <property name="exclude.src.files" value=""/>
+
   <patternset id="all.code.pattern">
     <include name="**/*.scala"/>
   </patternset>
@@ -47,6 +49,7 @@
   </patternset>
   <patternset id="spec.classpath.pattern">
     <patternset refid="main.classpath.pattern"/>
+    <include name="${lib.dir}/instinct/*.jar"/>
   </patternset>
 
   <fileset id="main.code.fileset" dir="${main.src.dir}">
