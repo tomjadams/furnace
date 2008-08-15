@@ -1,4 +1,4 @@
-package au.id.adams.file.io
+package com.googlecode.furnace.file.io
 
 import java.io.{ByteArrayOutputStream, File, FileInputStream}
 
