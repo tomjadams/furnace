@@ -10,15 +10,11 @@ object FastaParser {
   def parse(input: Iterator[Byte], sliceSize: Int): Iterator[GeneSequence] = new Iterator[GeneSequence] {
     def hasNext = input.hasNext
 
-    def next = getNext
-
-    private def getNext =
+    def next =
       if (input.hasNext) {
         val x = input.next
-        println(">>> " + x)
-        val sss = geneSequence(List(x))
-        println(">>> " + sss.toString)
-        sss
+        println(">>> Base: " + x)
+        geneSequence(List(x))
       } else {
         emptySequence
       }
