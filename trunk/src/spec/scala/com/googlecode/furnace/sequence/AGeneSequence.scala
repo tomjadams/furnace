@@ -7,6 +7,5 @@ import org.junit.runner.RunWith
 final class AGeneSequence {
   @Specification
   def canBeConsedWithABaseToProduceANewSequence {
-
   }
 }
