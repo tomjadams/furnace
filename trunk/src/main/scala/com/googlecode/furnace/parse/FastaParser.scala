@@ -1,5 +1,6 @@
 package com.googlecode.furnace.parse
 
+import scala.collection.mutable.{ArrayBuffer => MutableArray}
 import sequence.{Base, GeneSequence}
 import sequence.Base._
 import sequence.GeneSequence._
@@ -12,9 +13,11 @@ object FastaParser {
 
     def next =
       if (input.hasNext) {
-        val x = input.next
-        println(">>> Base: " + x)
-        geneSequence(List(x))
+        val bases = new MutableArray[Byte]
+        val base = input.next
+        bases += base
+//        println(">>> Base: " + base)
+        geneSequence(bases)
       } else {
         emptySequence
       }
