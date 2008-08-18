@@ -16,7 +16,7 @@ final class AFastaParserWithoutAHeader {
   def turnsAnIteratorOfBytesIntoAnIteratorOfGeneSequences {
     val sequences = parse(sequence, 10)
     while (sequences.hasNext) {
-      println(">>> Seq: " + sequences.next)
+      println(">>> Parsed sequence: " + sequences.next)
     }
     //    val sequences = parse(sequence, 10).toList
     //    expect that(sequences.size) isEqualTo 8
