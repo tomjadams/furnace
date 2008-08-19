@@ -36,7 +36,7 @@
           <root url="jar://$MODULE_DIR$/lib/instinct/functionaljava-2.10.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/instinct/objenesis-1.1.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/instinct/junit-dep-4.4.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/instinct/instinct-0.1.9.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/instinct/instinct-core-0.2.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
