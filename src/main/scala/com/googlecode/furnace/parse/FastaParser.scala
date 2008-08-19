@@ -14,7 +14,7 @@ import sequence.GeneSequence
 object FastaParser {
   def parse(input: Iterator[Byte], sliceSize: Int): Option[Iterator[GeneSequence]] =
     if (input.hasNext) {
-      Some(new GeneSequenceIterator(input, sliceSize))
+      Some(new FastaSequenceIterator(input, sliceSize))
     } else {
       None
     }
