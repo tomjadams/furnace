@@ -22,21 +22,6 @@ object FastaParser {
         emptySequence
       }
 
-
-    //    var i = input.next
-    //
-    //    println(i)
-    //
-    //    def next = {
-    //      if (i == -1)
-    //        error("Iterator.next (no more elements)")
-    //      else {
-    //        val r = i
-    //        i = input.next
-    //        r.toByte
-    //        geneSequence(List('C'))
-    //      }
-    //    }
-    //
+    private def read(limit: Int, current: Int): Seq[Byte] = error("")
   }
 }
