@@ -12,7 +12,7 @@
   <property name="project.zip" value="${project.shortname}-${project.version.full}.zip"/>
   <property name="src.zip" value="${project.shortname}-${project.version.full}-src.zip"/>
   <property name="scaladoc.zip" value="${project.shortname}-${project.version.full}-scaladoc.zip"/>
-  <property name="main.package.name" value="au.id.adams.furnace"/>
+  <property name="main.package.name" value="com.googlecode.furnace"/>
   <property name="main.class.name" value="${main.package.name}.SequenceSearcher"/>
 
   <property name="build.dir" value="build"/>

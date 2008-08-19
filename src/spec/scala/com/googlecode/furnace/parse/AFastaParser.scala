@@ -40,6 +40,22 @@ final class AFastaParserWithAHeader {
   }
 }
 
+final class AFastaParserWithALotOfData {
+  import file.io.FilePath
+  import file.io.FilePath._
+  import java.io.{File, FileInputStream}
+  import scalaz.javas.InputStream._
+
+  @Specification
+  def isFastAndDoesNotBlowMemory {
+    val file = "/Users/atom/Projects/OpenSource/furnace/src/spec/data/sequences/NC_003103_r.conorii.fasta"
+    val sequences = parse(new FileInputStream(file), 40).get
+    while (sequences.hasNext) {
+      println(">>> Parsed sequence: " + sequences.next)
+    }
+  }
+}
+
 object Bytes {
   import sequence.Base, Base._
 
