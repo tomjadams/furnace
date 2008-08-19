@@ -5,6 +5,7 @@ import file.io.FilePath._
 import java.io.{File, FileInputStream}
 import java.lang.Integer.parseInt
 import scalaz.javas.InputStream._
+import scalaz.OptionW._
 import sequence.GeneSequence
 import sequence.GeneSequence._
 import parse.FastaParser
@@ -22,14 +23,11 @@ object SequenceSearcher {
     println("Processing sequence file: " + filePathToString(inputSequence) + ", slice size: " + sliceSize)
     val in = new FileInputStream(inputSequence)
     try {
-      val result = FastaParser.parse(in, sliceSize)
-      if (result.isEmpty) {
-        println("No sequences were found in the input file")
-      } else {
+      FastaParser.parse(in, sliceSize).fold(println("No sequences were found in the input file"), (sequences => {
         println("The following sequences were found in the input file")
-        result.get.foreach(println)
+        sequences.foreach(println)
         println("Fin.")
-      }
+      }))
     } finally {
       in.close
     }
