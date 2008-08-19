@@ -1,22 +1,20 @@
 package com.googlecode.furnace.parse
 
 import Bytes._
-import parse.FastaParser._
-import sequence.GeneSequence._
-import java.io.ByteArrayInputStream
 import com.googlecode.instinct.expect.Expect._
 import com.googlecode.instinct.marker.annotate.Specification
-import com.googlecode.instinct.integrate.junit4.InstinctRunner
-import org.junit.runner.RunWith
+import java.io.ByteArrayInputStream
+import parse.FastaParser._
+import scalaz.list.NonEmptyList, NonEmptyList._
+import sequence.GeneSequence._
 
 final class AFastaParserWithNoSequenceToParse {
   private val noSequence = byteIterator("")
 
   @Specification
-  def returnsAnEmptySequence {
+  def returnsNone {
     val sequences = parse(noSequence, 10)
-    expect that sequences.hasNext isEqualTo false
-    expect that sequences.next isEqualTo geneSequence(baseSeq(""))
+    expect that sequences.isEmpty isEqualTo true
   }
 }
 
@@ -26,10 +24,10 @@ final class AFastaParserWithoutAHeader {
   @Specification
   def turnsAnIteratorOfBytesIntoAnIteratorOfGeneSequences {
     val sequences = parse(sequence, 10)
-    expect that sequences.hasNext isEqualTo true
-    expect that sequences.next isEqualTo geneSequence(baseSeq("ATGACAAAGC"))
-    while (sequences.hasNext) {
-      println(">>> Parsed sequence: " + sequences.next)
+    expect that sequences.get.hasNext isEqualTo true
+    expect that sequences.get.next isEqualTo geneSequence(baseSeq("ATGACAAAGC"))
+    while (sequences.get.hasNext) {
+      println(">>> Parsed sequence: " + sequences.get.next)
     }
     //    val sequences = parse(sequence, 10).toList
     //    expect that(sequences.size) isEqualTo 8
@@ -39,13 +37,12 @@ final class AFastaParserWithoutAHeader {
 final class AFastaParserWithAHeader {
   @Specification
   def turnsAnIteratorOfBytesIntoAnIteratorOfGeneSequences {
-
   }
 }
 
 object Bytes {
   import sequence.Base, Base._
 
-  def byteIterator(s: String): Iterator[Byte] = s.map(_.toByte).elements
-  def baseSeq(s: String): Seq[Base] = s.map(_.toByte: Base)
+  def byteIterator(bases: String): Iterator[Byte] = bases.map(_.toByte).elements
+  def baseSeq(bases: String): NonEmptyList[Base] = list(bases.map(_.toByte: Base).toList)
 }
