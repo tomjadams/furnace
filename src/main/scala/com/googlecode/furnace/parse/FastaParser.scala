@@ -1,32 +1,21 @@
 package com.googlecode.furnace.parse
 
-import scala.collection.mutable.{ArrayBuffer => MutableArray}
-import scalaz.list.NonEmptyList, NonEmptyList._
-import sequence.{Base, GeneSequence}
-import sequence.Base._
-import sequence.GeneSequence._
+import sequence.GeneSequence
 
+/**
+ * A <a href="http://en.wikipedia.org/wiki/Fasta_format">FASTA</a> parser.
+ * The parser returns an iterator of sequences, where each sequence is <var>sliceSize</var> long, the header is ignored (if present).
+ * Note that the parser is lazy, in that the underlying <code>input</code> will not be read until <code>next()</code> is called on the returned
+ * iterator.
+ * @param input An iterator of bytes, representing a sequence to be parsed (it may contain a header).
+ * @param sliceSize The size of each sequence to return.
+ * @return <code>None</code> if the <var>input</var> is empty, or a <code>Some</code> containing an iterator of gene sequences.
+ */
 object FastaParser {
-  private lazy val newLines = List('\n', '\r')
-
   def parse(input: Iterator[Byte], sliceSize: Int): Option[Iterator[GeneSequence]] =
     if (input.hasNext) {
-      Some(new GeneSequenceIterator(input))
+      Some(new GeneSequenceIterator(input, sliceSize))
     } else {
       None
     }
-
-  private def read(limit: Int, current: Int): Seq[Byte] = error("Not baked yet")
-
-  private final class GeneSequenceIterator(input: Iterator[Byte]) extends Iterator[GeneSequence] {
-    def hasNext = input.hasNext
-
-    def next = {
-      val bases = new MutableArray[Base]
-      val base = input.next
-      bases += base
-      //        println(">>> Base: " + base)
-      geneSequence(list(bases.toList))
-    }
-  }
 }
