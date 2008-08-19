@@ -21,13 +21,16 @@ final class AFastaParserWithNoSequenceToParse {
 final class AFastaParserWithoutAHeader {
   private val sequence = byteIterator("ATGACAAAGCTAATTATTCACTTAGTTTCAGACTCTTCCGTGCAAACTGCAAAATATACAGCAAATTCTG")
 
+  // TODO - Test that we can handle newlines
+  //      - That all  
+
   @Specification
   def turnsAnIteratorOfBytesIntoAnIteratorOfGeneSequences {
-    val sequences = parse(sequence, 10)
-    expect that sequences.get.hasNext isEqualTo true
-    expect that sequences.get.next isEqualTo geneSequence(baseSeq("ATGACAAAGC"))
-    while (sequences.get.hasNext) {
-      println(">>> Parsed sequence: " + sequences.get.next)
+    val result = parse(sequence, 10)
+    expect that result.get.hasNext isEqualTo true
+    expect that result.get.next isEqualTo geneSequence(baseSeq("ATGACAAAGC"))
+    while (result.get.hasNext) {
+      println(">>> Parsed sequence: " + result.get.next)
     }
     //    val sequences = parse(sequence, 10).toList
     //    expect that(sequences.size) isEqualTo 8
@@ -49,9 +52,12 @@ final class AFastaParserWithALotOfData {
   @Specification
   def isFastAndDoesNotBlowMemory {
     val file = "/Users/atom/Projects/OpenSource/furnace/src/spec/data/sequences/NC_003103_r.conorii.fasta"
-    val sequences = parse(new FileInputStream(file), 40).get
-    while (sequences.hasNext) {
-      println(">>> Parsed sequence: " + sequences.next)
+    val in = new FileInputStream(file)
+    try {
+      val sequences = parse(in, 40).get
+      while (sequences.hasNext) sequences.next
+    } finally {
+      in.close
     }
   }
 }
