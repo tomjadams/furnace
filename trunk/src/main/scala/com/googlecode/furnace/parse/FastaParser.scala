@@ -13,6 +13,7 @@ import sequence.GeneSequence
  */
 object FastaParser {
   def parse(input: Iterator[Byte], sliceSize: Int): Option[Iterator[GeneSequence]] =
+    // what in a lazy header removing iterator
     if (input.hasNext) {
       Some(new FastaSequenceIterator(input, sliceSize))
     } else {

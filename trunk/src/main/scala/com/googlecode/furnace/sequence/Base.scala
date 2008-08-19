@@ -22,10 +22,10 @@ private case object T extends Base {
   override def code = 'T'
 }
 
-private case class Other(code: Char) extends Base
-
 object Base {
   import Character._
+
+  def bases = List(A, C, G, T)
 
   implicit def baseToChar(b: Base) = b.code
 
@@ -34,8 +34,7 @@ object Base {
     case 'C' => C
     case 'G' => G
     case 'T' => T
-    //    case code => error("Unknown base: '" + code + "'")
-    case b => Other(b)
+    case code => error("Unknown base: '" + code + "'")
   }
 
   implicit def byteToBase(b: Byte): Base = b.toChar
