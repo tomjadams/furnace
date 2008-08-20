@@ -12,10 +12,11 @@ import sequence.GeneSequence
  * @return <code>None</code> if the <var>input</var> is empty, or a <code>Some</code> containing an iterator of gene sequences.
  */
 object FastaParser {
+  private lazy val lineSeparators = List('\r'.toByte, '\n'.toByte)
+
   def parse(input: Iterator[Byte], sliceSize: Int): Option[Iterator[GeneSequence]] =
-    // what in a lazy header removing iterator
     if (input.hasNext) {
-      Some(new FastaSequenceIterator(input, sliceSize))
+      Some(new FastaSequenceIterator(input.dropWhile(!lineSeparators.contains(_)), sliceSize))
     } else {
       None
     }
