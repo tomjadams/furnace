@@ -19,6 +19,18 @@ final class AFastaParserWithNoSequenceToParse {
   }
 }
 
+final class AFastaParserWithASequenceWithNoHeader {
+  private val noHeader = byteIterator("""
+      ATGACAAAGCTAATTATTCACTTAGTTTCAGACTCTTCCGTGCAAACTGCAAAATATACAGCAAATTCTG""")
+
+  @Specification {
+      val expectedException = classOf[RuntimeException],
+      val withMessage = "Input sequence contains no header: ATGACAAAGCTAATTATTCACTTAGTTTCAGACTCTTCCGTGCAAACTGCAAAATATACAGCAAATTCTG"}
+  def throwsAnError {
+    parse(noHeader, 10)
+  }
+}
+
 final class AFastaParserWithASequenceContainingASingleLineOfBases {
   private val sequence = byteIterator("""
       >gi|15891923|ref|NC_003103.1| Rickettsia conorii str. Malish 7, complete genome
@@ -26,9 +38,16 @@ final class AFastaParserWithASequenceContainingASingleLineOfBases {
 
   @Specification
   def turnsAnIteratorOfBytesIntoAnIteratorOfGeneSequences {
-    parse(sequence, 10).fold(error("No sequences found"), (_.foreach(sequence => {
-      expect.that(sequence.bases.length).isEqualTo(10)
-    })))
+    val result = parse(sequence, 10)
+    expect.that(result.isEmpty).isEqualTo(false)
+    val sequences = result.get.toList
+    expect.that(sequences(0)).isEqualTo(geneSequence(baseSeq("ATGACAAAGC")))
+    expect.that(sequences(1)).isEqualTo(geneSequence(baseSeq("TAATTATTCA")))
+    expect.that(sequences(2)).isEqualTo(geneSequence(baseSeq("CTTAGTTTCA")))
+    expect.that(sequences(3)).isEqualTo(geneSequence(baseSeq("GACTCTTCCG")))
+    expect.that(sequences(4)).isEqualTo(geneSequence(baseSeq("TGCAAACTGC")))
+    expect.that(sequences(5)).isEqualTo(geneSequence(baseSeq("AAAATATACA")))
+    expect.that(sequences(6)).isEqualTo(geneSequence(baseSeq("GCAAATTCTG")))
   }
 }
 
