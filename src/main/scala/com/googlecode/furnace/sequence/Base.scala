@@ -38,7 +38,4 @@ object Base {
   }
 
   implicit def byteToBase(b: Byte): Base = b.toChar
-
-  // TODO Why do you need to invoke the implicit explicitly?
-  implicit def seqByteToSeqBase(cs: Seq[Byte]): Seq[Base] = cs.map(byteToBase(_))
 }

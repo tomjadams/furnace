@@ -5,6 +5,7 @@ import com.googlecode.instinct.expect.Expect._
 import com.googlecode.instinct.marker.annotate.Specification
 import java.io.ByteArrayInputStream
 import parse.FastaParser._
+import scalaz.OptionW._
 import scalaz.list.NonEmptyList, NonEmptyList._
 import sequence.GeneSequence._
 
@@ -18,28 +19,16 @@ final class AFastaParserWithNoSequenceToParse {
   }
 }
 
-final class AFastaParserWithoutAHeader {
-  private val sequence = byteIterator("ATGACAAAGCTAATTATTCACTTAGTTTCAGACTCTTCCGTGCAAACTGCAAAATATACAGCAAATTCTG")
-
-  // TODO - Test that we can handle newlines
-  //      - That all  
+final class AFastaParserWithASequenceContainingASingleLineOfBases {
+  private val sequence = byteIterator("""
+      >gi|15891923|ref|NC_003103.1| Rickettsia conorii str. Malish 7, complete genome
+      ATGACAAAGCTAATTATTCACTTAGTTTCAGACTCTTCCGTGCAAACTGCAAAATATACAGCAAATTCTG""")
 
   @Specification
   def turnsAnIteratorOfBytesIntoAnIteratorOfGeneSequences {
-    val result = parse(sequence, 10)
-    expect that result.get.hasNext isEqualTo true
-    expect that result.get.next isEqualTo geneSequence(baseSeq("ATGACAAAGC"))
-    while (result.get.hasNext) {
-      println(">>> Parsed sequence: " + result.get.next)
-    }
-    //    val sequences = parse(sequence, 10).toList
-    //    expect that(sequences.size) isEqualTo 8
-  }
-}
-
-final class AFastaParserWithAHeader {
-  @Specification
-  def turnsAnIteratorOfBytesIntoAnIteratorOfGeneSequences {
+    parse(sequence, 10).fold(error("No sequences found"), (_.foreach(sequence => {
+      expect.that(sequence.bases.length).isEqualTo(10)
+    })))
   }
 }
 
@@ -48,14 +37,14 @@ final class AFastaParserWithALotOfData {
   import file.io.FilePath._
   import java.io.{File, FileInputStream}
   import scalaz.javas.InputStream._
+  import com.googlecode.instinct.marker.annotate.Specification.SpecificationState._
 
-  @Specification
+  @Specification {val state = PENDING}
   def isFastAndDoesNotBlowMemory {
     val file = "/Users/atom/Projects/OpenSource/furnace/src/spec/data/sequences/NC_003103_r.conorii.fasta"
     val in = new FileInputStream(file)
     try {
-      val sequences = parse(in, 40).get
-      while (sequences.hasNext) sequences.next
+      parse(in, 40).fold(error("No sequences found"), (s => s.foreach(_)))
     } finally {
       in.close
     }

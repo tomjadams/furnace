@@ -17,7 +17,7 @@ final class TwoEqualGeneSequences {
 
 final class TwoUnEqualGeneSequences {
   private val seq1 = geneSequence(nel('A'))
-  private val seq2 = geneSequence(nel('B'))
+  private val seq2 = geneSequence(nel('T'))
 
   @Specification
   def areNotEqual {
