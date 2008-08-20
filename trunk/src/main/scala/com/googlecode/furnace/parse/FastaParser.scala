@@ -25,16 +25,13 @@ object FastaParser {
       if (!firstChar.equals('>'.toByte)) {
         error("Input sequence contains no header: " + firstChar.toChar + noLeadingWhitespace.takeWhile(!lineSeperators.contains(_)).map(_.toChar).mkString)
       } else {
+        var called = 0
         val noHeader = noLeadingWhitespace.dropWhile(!lineSeperators.contains(_))
         val iter = new Iterator[GeneSequence] {
           def hasNext = noHeader.hasNext
 
           def next = {
-//            printBases("No header", noHeader)
-            val bs = noHeader.filter(validBases.contains(_)).map(byteToBase(_))
-//            println(">>> Zipped 40: " + bs.zipWithIndex.takeWhile(_._2 < sliceSize).map(_._1).toList.mkString)
-            val x = bs.zipWithIndex.takeWhile(_._2 < sliceSize).map(_._1).toList
-            //            println(">>> Final output: " + x)
+            val x = noHeader.filter(validBases.contains(_)).map(byteToBase(_)).zipWithIndex.takeWhile(_._2 < sliceSize).map(_._1).toList
             geneSequence(list(x))
           }
         }
@@ -43,12 +40,4 @@ object FastaParser {
     } else {
       None
     }
-
-//  private def printBases(s: String, b: Iterator[Byte]) {
-//    println(">>> " + s + ": " + b.toList.map(_.toChar).mkString)
-//  }
-//
-//  private def printBases(s: String, b: Iterator[Base]) {
-//    println(">>> " + s + ": " + b.toList.mkString)
-//  }
 }
