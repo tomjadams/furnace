@@ -57,9 +57,8 @@ final class AFastaParserWithALotOfData {
   import file.io.FilePath._
   import java.io.{File, FileInputStream}
   import scalaz.javas.InputStream._
-  import com.googlecode.instinct.marker.annotate.Specification.SpecificationState._
 
-  @Specification {val state = PENDING}
+  @Specification
   def isFastAndDoesNotBlowMemory {
     val file = "/Users/atom/Projects/OpenSource/furnace/src/spec/data/sequences/NC_003103_r.conorii.fasta"
     val in = new FileInputStream(file)
