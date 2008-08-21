@@ -1,32 +1,22 @@
 package com.googlecode.furnace.util
 
+import java.io.File
 import file.io.FilePath
 
-sealed trait Argument
-
-private final case class ArgumentWithoutValue(option: String) extends Argument {
-  override def toString = option
-}
-
-private final case class ArgumentWithValue(option: String, value: String) extends Argument {
-  override def toString = option + " " + value
-}
-
-object Argument {
-  def argument(option: String): Argument = ArgumentWithoutValue(option)
-  def argument(option: String, value: String): Argument = ArgumentWithValue(option, value)
-}
-
-sealed trait Program {
+sealed trait CommandLineProgram {
   import Argument._
 
-  def arg(option: String): Program = this match {
-    case Program_(path, args) => Program_(path, args + argument(option))
+  def apply(option: String): CommandLineProgram = this match {
+    case CommandLineProgram_(path, args) => CommandLineProgram_(path, args ::: List(argument(option)))
   }
 
-  def arg(option: String, value: String): Program = this match {
-    case Program_(path, args) => Program_(path, args + argument(option, value))
+  def arg(option: String): CommandLineProgram = apply(option)
+
+  def apply(option: String, value: String): CommandLineProgram = this match {
+    case CommandLineProgram_(path, args) => CommandLineProgram_(path, args ::: List(argument(option, value)))
   }
+
+  def arg(option: String, value: String): CommandLineProgram = apply(option, value)
 
   def executable: FilePath
 
@@ -34,20 +24,24 @@ sealed trait Program {
 
   def commandLine: String
 
-  def execute: Unit
+  def execute: Process = executeInDir(null)
+
+  def executeInDir(workingDir: FilePath): Process
 }
 
-private final case class Program_(executable: FilePath, args: List[Argument]) extends Program {
+private final case class CommandLineProgram_(executable: FilePath, args: List[Argument]) extends CommandLineProgram {
   import file.io.FilePath._
+
+  lazy val runtime = Runtime.getRuntime
 
   def commandLine = executable + (args match {
     case Nil => ""
     case a => " " + a.mkString(" ")
   })
 
-  def execute: Unit = error("TODO")
+  def executeInDir(workingDir: FilePath) = runtime.exec(commandLine, null, workingDir)
 }
 
 object CommandLineProgram {
-  def command(executable: FilePath): Program = Program_(executable, Nil)
+  def command(executable: FilePath): CommandLineProgram = CommandLineProgram_(executable, Nil)
 }
