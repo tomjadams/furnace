@@ -6,8 +6,6 @@ import java.io.{File, FileInputStream}
 import java.lang.Integer.parseInt
 import scalaz.javas.InputStream._
 import scalaz.OptionW._
-import sequence.GeneSequence
-import sequence.GeneSequence._
 import parse.FastaParser
 
 object SequenceSearcher {
