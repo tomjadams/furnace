@@ -2,16 +2,14 @@ package com.googlecode.furnace.util
 
 import file.io.FilePath
 
-sealed trait Argument {
-  def asString: String
-}
+sealed trait Argument
 
 private final case class ArgumentWithoutValue(option: String) extends Argument {
-  def asString = option
+  override def toString = option
 }
 
 private final case class ArgumentWithValue(option: String, value: String) extends Argument {
-  def asString = option + " " + value
+  override def toString = option + " " + value
 }
 
 object Argument {
@@ -23,12 +21,16 @@ sealed trait Program {
   import Argument._
 
   def arg(option: String): Program = this match {
-    case Program_(path, args) => Program_(path, argument(option) :: args)
+    case Program_(path, args) => Program_(path, args + argument(option))
   }
 
   def arg(option: String, value: String): Program = this match {
-    case Program_(path, args) => Program_(path, argument(option, value) :: args)
+    case Program_(path, args) => Program_(path, args + argument(option, value))
   }
+
+  def executable: FilePath
+
+  def args: List[Argument]
 
   def commandLine: String
 
@@ -40,7 +42,7 @@ private final case class Program_(executable: FilePath, args: List[Argument]) ex
 
   def commandLine = executable + (args match {
     case Nil => ""
-    case a => a.mkString(" ")
+    case a => " " + a.mkString(" ")
   })
 
   def execute: Unit = error("TODO")

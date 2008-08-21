@@ -8,7 +8,13 @@ import CommandLineProgram._
 final class ACommandLineProgram {
   @Specification
   def canBuildCommandLinesWithoutArguments {
-    val p1 = command("/opt/blast/bin/blastall")
-    expect.that(p1.commandLine).isEqualTo("/opt/blast/bin/blastall")
+    val p = command("/opt/blast/bin/blastall")
+    expect.that(p.commandLine).isEqualTo("/opt/blast/bin/blastall")
+  }
+
+  @Specification
+  def canBuildCommandLinesWithArguments {
+    val p = command("/opt/blast/bin/blastall").arg("-f").arg("-o").arg("-bar", "baz")
+    expect.that(p.commandLine).isEqualTo("/opt/blast/bin/blastall -f -o -bar baz")
   }
 }
