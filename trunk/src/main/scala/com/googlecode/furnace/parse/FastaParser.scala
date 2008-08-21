@@ -25,7 +25,6 @@ object FastaParser {
       if (!firstChar.equals('>'.toByte)) {
         error("Input sequence contains no header: " + firstChar.toChar + noLeadingWhitespace.takeWhile(!lineSeperators.contains(_)).map(_.toChar).mkString)
       } else {
-        var called = 0
         val noHeader = noLeadingWhitespace.dropWhile(!lineSeperators.contains(_))
         val iter = new Iterator[GeneSequence] {
           def hasNext = noHeader.hasNext
