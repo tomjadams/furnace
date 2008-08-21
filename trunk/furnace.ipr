@@ -48,6 +48,7 @@
       <entry name="?*.png" />
       <entry name="?*.jpeg" />
       <entry name="?*.jpg" />
+      <entry name="?*.fasta" />
     </wildcardResourcePatterns>
   </component>
   <component name="DependenciesAnalyzeManager">

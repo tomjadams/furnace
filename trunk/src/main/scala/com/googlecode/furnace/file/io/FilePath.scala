@@ -9,6 +9,8 @@ object FilePath {
 
   implicit def filepath(filePath: String): FilePath = FilePath_(filePath)
 
+  implicit def filepath(file: File): FilePath = file.getCanonicalPath
+
   implicit def filePathToString(filePath: FilePath): String = filePath match {
     case FilePath_(p) => p
   }

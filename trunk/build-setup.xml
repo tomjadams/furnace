@@ -74,6 +74,7 @@
   </path>
   <path id="spec.class.path">
     <path refid="main.class.path"/>
+    <pathelement location="${spec.data.dir}"/>
     <pathelement location="${spec.classes.dir}"/>
     <fileset dir="${basedir}">
       <patternset refid="spec.classpath.pattern"/>

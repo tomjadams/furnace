@@ -57,10 +57,11 @@ final class AFastaParserWithALotOfData {
   import file.io.FilePath._
   import java.io.{File, FileInputStream}
   import scalaz.javas.InputStream._
+  import spec.SpecificationHelper._
 
   @Specification
   def isFastAndDoesNotBlowMemory {
-    val file = "/Users/atom/Projects/OpenSource/furnace/src/spec/data/sequences/NC_003103_r.conorii.fasta"
+    val file = dataFile("sequences/NC_003103_r.conorii.fasta")
     val in = new FileInputStream(file)
     try {
       parse(in, 40).fold(error("No sequences found"), (s => s.foreach(_)))
