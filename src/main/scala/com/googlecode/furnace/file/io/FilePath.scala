@@ -4,6 +4,7 @@ sealed trait FilePath
 
 private final case class FilePath_(path: String) extends FilePath
 
+// TODO Handle null for passed params correctly.
 object FilePath {
   import java.io.File
 
@@ -13,11 +14,18 @@ object FilePath {
 
   implicit def filePathToString(filePath: FilePath): String = filePath match {
     case FilePath_(p) => p
+    case null => null
   }
 
-  implicit def stringToFile(filePath: String): File = filePathToFile(filepath(filePath))
+  implicit def stringToFile(filePath: String): File = filePath match {
+    case null => null
+    case f => filePathToFile(filepath(f))
+  }
 
-  implicit def filePathToFile(filePath: FilePath): File = new File(filePath)
+  implicit def filePathToFile(filePath: FilePath): File = filePath match {
+    case FilePath_(filePath) => new File(filePath)
+    case null => null
+  }
 
   implicit def filePathToScalazFile(filePath: FilePath): scalaz.io.File = scalaz.io.File.file(filePath)
 }
