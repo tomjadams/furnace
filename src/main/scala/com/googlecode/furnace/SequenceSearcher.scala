@@ -1,7 +1,7 @@
 package com.googlecode.furnace
 
-import file.io.FilePath
-import file.io.FilePath._
+import util.io.FilePath
+import util.io.FilePath._
 import java.io.{File, FileInputStream}
 import java.lang.Integer.parseInt
 import scalaz.javas.InputStream._

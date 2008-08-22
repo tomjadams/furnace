@@ -1,4 +1,4 @@
-package com.googlecode.furnace.file.io
+package com.googlecode.furnace.util.io
 
 import java.io.{ByteArrayOutputStream, File, FileInputStream}
 

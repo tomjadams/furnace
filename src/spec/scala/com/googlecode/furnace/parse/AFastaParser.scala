@@ -53,8 +53,8 @@ final class AFastaParserWithASequenceContainingASingleLineOfBases {
 }
 
 final class AFastaParserWithALotOfData {
-  import file.io.FilePath
-  import file.io.FilePath._
+  import util.io.FilePath
+  import util.io.FilePath._
   import java.io.{File, FileInputStream}
   import scalaz.javas.InputStream._
   import spec.SpecificationHelper._
