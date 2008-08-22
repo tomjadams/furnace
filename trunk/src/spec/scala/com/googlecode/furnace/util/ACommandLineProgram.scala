@@ -1,12 +1,12 @@
 package com.googlecode.furnace.util
 
-import CommandLineProgram._
+import CommandLineProcess._
 import Process._
 import instinct.expect.Expect._
 import instinct.marker.annotate.Specification
 import file.io.FilePath._
 
-final class ACommandLineProgram {
+final class ACommandLineProcess {
   @Specification
   def canBuildCommandLinesWithoutArguments {
     val p = command("/opt/blast/bin/blastall")

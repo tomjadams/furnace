@@ -19,6 +19,7 @@
 
   <target name="sequence" depends="-jar-classes">
     <java classname="${main.class.name}" fork="true" classpathref="main.class.path">
+      <env key="BLAST_HOME" value="${blast.dir}"/>
       <arg line="${spec.data.dir}/sequences/NC_003103_r.conorii.fasta"/>
       <!--<arg line="${spec.data.dir}/sequences/NC_003103_r.conorii.small.fasta"/>-->
     </java>
@@ -29,7 +30,7 @@
   </target>
 
   <target name="-spec" depends="-compile">
-    <java classname="com.googlecode.furnace.SpecificationRunner" fork="true" classpathref="spec.class.path"/>
+    <java classname="com.googlecode.furnace.spec.SpecificationRunner" fork="true" classpathref="spec.class.path"/>
     <!--<instinct failureproperty="specs-failed">-->
     <!--<classpath refid="spec.class.path"/>-->
     <!--<specifications dir="${spec.classes.dir}"/>-->
