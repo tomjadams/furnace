@@ -1,6 +1,6 @@
 package com.googlecode.furnace.analyse
 
-import file.io.FilePath
+import util.io.FilePath
 
 trait AnalysisResult {
   def analysisOutput: FilePath

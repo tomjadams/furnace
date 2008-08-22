@@ -1,7 +1,7 @@
 package com.googlecode.furnace.util
 
 import java.io.File
-import file.io.FilePath
+import util.io.FilePath
 
 sealed trait CommandLineProcess {
   import Argument._
@@ -30,7 +30,7 @@ sealed trait CommandLineProcess {
 }
 
 private final case class CommandLineProcess_(executable: FilePath, args: List[Argument]) extends CommandLineProcess {
-  import file.io.FilePath._
+  import util.io.FilePath._
 
   lazy val runtime = Runtime.getRuntime
 

@@ -4,7 +4,7 @@ import CommandLineProcess._
 import Process._
 import instinct.expect.Expect._
 import instinct.marker.annotate.Specification
-import file.io.FilePath._
+import util.io.FilePath._
 
 final class ACommandLineProcess {
   @Specification
