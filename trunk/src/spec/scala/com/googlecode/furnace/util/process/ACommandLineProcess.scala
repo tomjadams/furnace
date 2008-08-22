@@ -1,4 +1,4 @@
-package com.googlecode.furnace.util
+package com.googlecode.furnace.util.process
 
 import CommandLineProcess._
 import Process._
@@ -29,6 +29,14 @@ final class ACommandLineProcess {
   def runsSimpleCommands {
     val ls = command("/bin/ls").arg("-l").arg("-a").arg("/")
     val output = ls.execute.output
+    expect.that(output).containsString("tmp")
+    expect.that(output).containsString("usr")
+  }
+
+  @Specification
+  def runsSimpleCommandsInAWorkingDirectory {
+    val ls = command("/bin/ls").arg("-l")
+    val output = ls.executeInDir("/").output
     expect.that(output).containsString("tmp")
     expect.that(output).containsString("usr")
   }

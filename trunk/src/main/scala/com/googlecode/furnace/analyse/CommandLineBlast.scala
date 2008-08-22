@@ -1,9 +1,9 @@
 package com.googlecode.furnace.analyse
 
 import System._
-import util.Process._
-import util.CommandLineProcess
-import util.CommandLineProcess._
+import util.process.Process._
+import util.process.CommandLineProcess
+import util.process.CommandLineProcess._
 
 // file:///opt/blast-2.2.18/doc/index.html
 // blastall -p blastn  -e 1.0 -d ecoli.nt -i test.txt -o test.out.
