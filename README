@@ -29,10 +29,18 @@ Documentation can be found at: http://furnace.googlecode.com/.
 * Installation *
 
 Note. Furnace requires a Unix or Unix-like operating system, and may not work
-      on non-Unix systems. 
+      on non-Unix systems.
 
 1. Downlaod and install BLAST [1] on each grid node.
+
+2. Configure BLAST with the database:
+
+  1. Unzip etc/database/human3UTR.zip
+  2. $ /opt/blast/bin/formatdb -i human3UTR.fas -p F -o T
+  3. $ cp etc/database/human3UTR.fas* /opt/blast/data/
+
 2. Download and install GridGain on each grid node.
+
 3. Run it...
 
 
