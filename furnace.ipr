@@ -255,7 +255,7 @@
   </component>
   <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="Specifications" type="Application" factoryName="Application" enabled="false" merge="false" sample_coverage="true" runner="emma">
-      <option name="MAIN_CLASS_NAME" value="com.googlecode.furnace.SpecificationRunner" />
+      <option name="MAIN_CLASS_NAME" value="com.googlecode.furnace.spec.SpecificationRunner" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
