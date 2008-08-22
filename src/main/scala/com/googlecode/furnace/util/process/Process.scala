@@ -1,4 +1,4 @@
-package com.googlecode.furnace.util
+package com.googlecode.furnace.util.process
 
 object Process {
   implicit def pimpedProcess(p: java.lang.Process) = new {

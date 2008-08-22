@@ -1,4 +1,4 @@
-package com.googlecode.furnace.util
+package com.googlecode.furnace.util.process
 
 import java.io.File
 import util.io.FilePath
