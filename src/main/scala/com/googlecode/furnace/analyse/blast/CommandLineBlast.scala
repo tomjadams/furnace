@@ -14,17 +14,17 @@ sealed trait CommandLineBlast {
   private lazy val tempDir = getProperty("java.io.tmpdir")
 
   def unary_!(): AnalysisResult = this match {
-    case CommandLineBlast_(name, config) => execute(name, config)
+    case CommandLineBlast_(indentifier, config) => execute(indentifier, config)
   }
 
-  private def execute(name: String, config: BlastConfiguration): AnalysisResult = {
-    val outputFile = new File(tempDir, "BlastReport_" + name.replaceAll(" ", "_") + config.outputFormat.fileExtension)
+  private def execute(identifier: SequenceIdentifier, config: BlastConfiguration) = {
+    val outputFile = new File(tempDir, "BlastReport_" + identifier + config.outputFormat.fileExtension)
     val executable = config.blastHome + "/bin/" + config.searchUtility.name
     val c = command(executable)("-p", config.program.name)("-e", config.expectation.toString)("-d", config.database)("-i", config.inputSequence)("-o", outputFile)("-T", config.outputFormat.isHtml)
     info("Invoking BLAST synchronously using command: " + c.commandLine)
     val p = c.executeInDir(config.blastHome)
     if (p.waitFor == 0) {
-      BlastAnalysisResult(name, outputFile, config.outputFormat)
+      BlastAnalysisResult(identifier, outputFile, config.outputFormat)
     } else {
       error("Error running blast command, command output:\n" + p.error)
     }
@@ -35,8 +35,8 @@ sealed trait CommandLineBlast {
   private implicit def booleanToBlastCommandString(b: Boolean): String = if (b) "T" else "F"
 }
 
-private final case class CommandLineBlast_(name: String, config: BlastConfiguration) extends CommandLineBlast
+private final case class CommandLineBlast_(indentifier: SequenceIdentifier, config: BlastConfiguration) extends CommandLineBlast
 
 object CommandLineBlast {
-  def blast(name: String, config: BlastConfiguration): CommandLineBlast = CommandLineBlast_(name: String, config: BlastConfiguration)
+  def blast(identifier: SequenceIdentifier, config: BlastConfiguration): CommandLineBlast = CommandLineBlast_(identifier, config)
 }
