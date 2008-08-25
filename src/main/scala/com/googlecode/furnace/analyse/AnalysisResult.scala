@@ -9,7 +9,8 @@ trait AnalysisResult {
 }
 
 sealed trait OutputFormat {
-  def html: Boolean
+  def isHtml: Boolean
+  def fileExtension: String
 }
 
 object OutputFormat {
@@ -18,9 +19,11 @@ object OutputFormat {
 }
 
 private final case object Text extends OutputFormat {
-  def html = false
+  def isHtml = false
+  def fileExtension = ".txt"
 }
 
 private final case object Html extends OutputFormat {
-  def html = true
+  def isHtml = true
+  def fileExtension = ".html"
 }
