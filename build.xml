@@ -21,7 +21,8 @@
     <java classname="${main.class.name}" fork="true" classpathref="main.class.path">
       <env key="BLAST_HOME" value="${blast.dir}"/>
       <arg line="${spec.data.dir}/sequences/NC_003103_r.conorii.fasta"/>
-      <!--<arg line="${spec.data.dir}/sequences/NC_003103_r.conorii.small.fasta"/>-->
+      <arg line="${blast.data.dir}/human3UTR.fas"/>
+      <arg line="40"/>
     </java>
   </target>
 
