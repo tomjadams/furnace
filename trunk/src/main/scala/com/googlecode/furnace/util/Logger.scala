@@ -16,8 +16,14 @@
 
 package com.googlecode.furnace.util
 
+import Console._
+
 object Logger {
   def info(message: => String) {
     println(message)
+  }
+
+  def error(message: => String) {
+    err.println(message)
   }
 }

@@ -36,6 +36,7 @@
 
   <property name="blast.dir" value="/opt/blast"/>
   <property name="blast.bin.dir" value="${blast.dir}/bin"/>
+  <property name="blast.data.dir" value="${blast.dir}/data"/>
 
   <property name="exclude.src.files" value=""/>
 
