@@ -5,7 +5,6 @@ import java.lang.Integer.parseInt
 import invoke.LocalBlastInvoker
 import scalaz.OptionW._
 import scalaz.javas.InputStream._
-import sequence.GeneSequence
 import parse.FastaParser
 import util.Logger, Logger._
 import util.io.FilePath
@@ -28,7 +27,7 @@ object SequenceSearcher {
       FastaParser.parse(in, sliceSize).fold(Logger.error("No sequences were found in the input file"), (sequences => {
         info("Processing parsed sequences...")
         sequences.zipWithIndex.foreach(sequenceIdPair => {
-          val name = inputSequence.getName + "_s" + sliceSize + "_id" + sequenceIdPair._2
+          val name: String = inputSequence.getName + "_s" + sliceSize + "_id" + sequenceIdPair._2
           invoker.invoke(name, database, sequenceIdPair._1)
         })
         info("Fin.")
