@@ -5,5 +5,7 @@ object Process {
     import scalaz.javas.InputStream.InputStreamByteStream
 
     def output = p.getInputStream.map(_.toChar).mkString
+
+    def error = p.getErrorStream.map(_.toChar).mkString
   }
 }
