@@ -40,6 +40,8 @@ private final case class CommandLineProcess_(executable: FilePath, args: List[Ar
   })
 
   def executeInDir(workingDir: FilePath) = runtime.exec(commandLine, null, workingDir)
+
+  override def toString: String = commandLine
 }
 
 object CommandLineProcess {
