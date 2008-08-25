@@ -1,12 +1,14 @@
 package com.googlecode.furnace
 
-import util.io.FilePath
-import util.io.FilePath._
 import java.io.{File, FileInputStream}
 import java.lang.Integer.parseInt
-import scalaz.javas.InputStream._
+import invoke.LocalBlastInvoker
 import scalaz.OptionW._
+import scalaz.javas.InputStream._
+import sequence.GeneSequence
 import parse.FastaParser
+import util.io.FilePath
+import util.io.FilePath._
 
 object SequenceSearcher {
   val defaultSliceSize = 40
@@ -21,9 +23,10 @@ object SequenceSearcher {
     println("Processing sequence file: " + filePathToString(inputSequence) + ", slice size: " + sliceSize)
     val in = new FileInputStream(inputSequence)
     try {
-      FastaParser.parse(in, sliceSize).fold(println("No sequences were found in the input file"), (sequences => {
+      FastaParser.parse(in, sliceSize).fold(println("No sequences were found in the input file"), ((sequences: Iterator[GeneSequence]) => {
         println("The following sequences were found in the input file")
-        sequences.foreach(println)
+//        sequences.foreach(println)
+        new LocalBlastInvoker().invoke(sequences.next)
         println("Fin.")
       }))
     } finally {

@@ -16,15 +16,17 @@ sealed trait CommandLineBlast {
   }
 
   private def execute(name: String, config: BlastConfiguration) = {
-    val outputFile = createTempFile("BlastRun_" + name, ".txt")
+    val outputFile = createTempFile("Blast_" + name.replaceAll(" ", "_"), config.outputFormat.fileExtension)
     val executable = config.blastHome + "/bin/" + config.searchUtility.name
-    val c = command(executable)("-p", config.program.name)("-e", config.expectation.toString)("-d", config.database)("-i", config.inputSequence)("-o", outputFile)
+    val c = command(executable)("-p", config.program.name)("-e", config.expectation.toString)("-d", config.database)("-i", config.inputSequence)("-o", outputFile)("-T", config.outputFormat.isHtml)
     info("Invoking BLAST using command: " + c.commandLine)
     val p = c.executeInDir(config.blastHome)
     BlastAnalysisResult(name, outputFile, config.outputFormat)
   }
 
   private implicit def fileToString(f: File): String = f: FilePath
+
+  private implicit def booleanToBlastCommandString(b: Boolean): String = if (b) "T" else "F"
 }
 
 private final case class CommandLineBlast_(name: String, config: BlastConfiguration) extends CommandLineBlast
