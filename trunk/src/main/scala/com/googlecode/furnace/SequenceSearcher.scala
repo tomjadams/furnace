@@ -1,5 +1,7 @@
 package com.googlecode.furnace
 
+import analyse.AnalysisResult
+import analyse.SequenceIdentifier._
 import java.io.{File, FileInputStream}
 import java.lang.Integer.parseInt
 import invoke.LocalBlastInvoker
@@ -26,8 +28,9 @@ object SequenceSearcher {
     try {
       FastaParser.parse(in, sliceSize).fold(Logger.error("No sequences were found in the input file"), (sequences => {
         sequences.zipWithIndex.foreach(sequenceIdPair => {
-          val name: String = inputSequence.getName + "_s" + sliceSize + "_id" + sequenceIdPair._2
-          invoker.invoke(name, database, sequenceIdPair._1)
+          val sequenceId = id(inputSequence, sliceSize, sequenceIdPair._2)
+          val result: AnalysisResult = invoker.invoke(sequenceId, database, sequenceIdPair._1)
+          info("Completed processing: " + result.identifier)
         })
         info("Fin.")
       }))

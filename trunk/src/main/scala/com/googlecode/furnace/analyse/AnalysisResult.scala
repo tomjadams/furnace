@@ -3,7 +3,7 @@ package com.googlecode.furnace.analyse
 import util.io.FilePath
 
 trait AnalysisResult {
-  def name: String
+  def identifier: SequenceIdentifier
   def analysisOutput: FilePath
   def outputFormat: OutputFormat
 }
