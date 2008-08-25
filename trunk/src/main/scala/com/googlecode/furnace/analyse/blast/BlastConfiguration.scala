@@ -38,6 +38,9 @@ private final case class BlastConfiguration_(blastHome: FilePath, searchUtility:
 }
 
 object BlastConfiguration {
+  import BlastProgram._
+  import BlastSearchUtility._
+  import OutputFormat._
   import System._
 
   def blastConfig(database: FilePath, inputSequence: FilePath): BlastConfiguration =
@@ -47,7 +50,7 @@ object BlastConfiguration {
       blastConfig(getenv("BLAST_HOME"), database, inputSequence)
     }
 
-  def blastConfig(blastHome: FilePath, database: FilePath, inputSequence: FilePath): BlastConfiguration = BlastConfiguration_(blastHome, BlastAll, BlastN, 10.0, database, inputSequence, Text)
+  def blastConfig(blastHome: FilePath, database: FilePath, inputSequence: FilePath): BlastConfiguration = BlastConfiguration_(blastHome, blastall, blastn, 10.0, database, inputSequence, text)
 }
 
 sealed trait BlastSearchUtility {
