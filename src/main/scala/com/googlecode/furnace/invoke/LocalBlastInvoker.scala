@@ -23,7 +23,11 @@ final class LocalBlastInvoker extends Invoker {
     val inputFile = new File(tempDir, "InputSplit_" + identifier + ".fasta")
     val out = new BufferedOutputStream(new FileOutputStream(inputFile))
     try {
+      (">Source=" + identifier.inputSequence + ",slice=" + identifier.sliceSize + ",split=" + identifier.splitId).foreach(out.write(_))
+      out.write('\n')
       sequence.toString.foreach(out.write(_))
+      out.write('\n')
+      out.flush
     } finally {
       out.close
     }
