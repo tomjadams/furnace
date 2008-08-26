@@ -23,7 +23,9 @@ sealed trait SequenceIdentifier {
   def sliceSize: Int
   def splitId: Int
 
-  override def toString = (inputSequence.getName + "_s" + sliceSize + "_id" + splitId).replaceAll(" ", "_")
+  def inputSequenceName = inputSequence.getName
+
+  override def toString = (inputSequenceName + "_s" + sliceSize + "_id" + splitId).replaceAll(" ", "_")
 }
 
 private final case class SequenceIdentifier_(inputSequence: FilePath, sliceSize: Int, splitId: Int) extends SequenceIdentifier
