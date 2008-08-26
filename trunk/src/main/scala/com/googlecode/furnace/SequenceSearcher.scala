@@ -28,9 +28,9 @@ object SequenceSearcher {
     try {
       FastaParser.parse(in, sliceSize).fold(Logger.error("No sequences were found in the input file"), (sequences => {
         sequences.zipWithIndex.foreach(sequenceIdPair => {
-          val sequenceId = id(inputSequence, sliceSize, sequenceIdPair._2)
-          val result: AnalysisResult = invoker.invoke(sequenceId, database, sequenceIdPair._1)
-          info("Completed processing: " + result.identifier)
+          val result = invoker.invoke(id(inputSequence, sliceSize, sequenceIdPair._2), database, sequenceIdPair._1)
+          info("Completed processing split sequence " + result.identifier.inputSequenceName + "; split: " + result.identifier.splitId +
+              "; slice size: " + result.identifier.sliceSize + "; output: " + result.analysisOutput)
         })
         info("Fin.")
       }))
