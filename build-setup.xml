@@ -47,9 +47,10 @@
   </patternset>
 
   <patternset id="main.classpath.pattern">
+    <include name="${lib.dir}/gridgain/*.jar"/>
+    <include name="${lib.dir}/log4j/*.jar"/>
     <include name="${lib.dir}/scala/*.jar"/>
     <include name="${lib.dir}/scalaz/*.jar"/>
-    <include name="${lib.dir}/gridgain/*.jar"/>
   </patternset>
   <patternset id="spec.classpath.pattern">
     <patternset refid="main.classpath.pattern"/>
