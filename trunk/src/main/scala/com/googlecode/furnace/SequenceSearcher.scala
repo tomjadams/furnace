@@ -45,6 +45,7 @@ object SequenceSearcher {
     info("Processing sequence file: " + filePathToString(inputSequence) + ", slice size: " + sliceSize)
     val in = new FileInputStream(inputSequence)
     try {
+//      masterNode
       FastaParser.parse(in, sliceSize).fold(Logger.error("No sequences were found in the input file"), (sequences => {
         sequences.zipWithIndex.foreach(sequenceIdPair => {
           val result = invoker.invoke(id(inputSequence, sliceSize, sequenceIdPair._2), database, sequenceIdPair._1)

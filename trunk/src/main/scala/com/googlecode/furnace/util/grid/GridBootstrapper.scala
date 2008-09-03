@@ -31,4 +31,11 @@ object GridBootstrapper {
     info("Stopping master grid node")
     stop(stopAllJobs);
   }
+
+  def masterNode = getGrid
+
+//            // Execute Hello World task.
+//            GridTaskFuture<Integer> future = grid.execute(GridHelloWorldTask.class, "Hello World");
+//            // Wait for task completion.
+//            int phraseLen = future.get();
 }

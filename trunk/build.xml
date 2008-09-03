@@ -58,7 +58,7 @@
     <sequential>
       <mkdir dir="@{output.dir}"/>
       <scalac classpathref="@{classpath.ref}" destdir="@{output.dir}" force="${compile.force}" deprecation="${compile.deprecation}"
-          unchecked="${compile.unchecked}">
+          unchecked="${compile.unchecked}" addparams="-Xprint:typer">
         <src>
           <path refid="@{src.path.ref}"/>
         </src>
