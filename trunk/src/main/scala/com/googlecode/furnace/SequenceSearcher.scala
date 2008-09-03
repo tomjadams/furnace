@@ -25,6 +25,7 @@ import scalaz.OptionW._
 import scalaz.javas.InputStream._
 import parse.FastaParser
 import util.Logger, Logger._
+import util.grid.GridBootstrapper._
 import util.io.FilePath
 import util.io.FilePath._
 
@@ -39,6 +40,7 @@ object SequenceSearcher {
   }
 
   def run(inputSequence: FilePath, database: FilePath, sliceSize: Int) {
+    startMasterNode
     info("Processing sequence file: " + filePathToString(inputSequence) + ", slice size: " + sliceSize)
     val in = new FileInputStream(inputSequence)
     try {
@@ -52,6 +54,7 @@ object SequenceSearcher {
       }))
     } finally {
       in.close
+      stopMasterNode
     }
   }
 }
