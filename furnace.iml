@@ -48,6 +48,12 @@
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/gridgain/gridgain-2.0.3.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/gridgain/spring-2.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/gridgain/tidy-04aug2000-r7.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/gridgain/javassist-3.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/gridgain/jms-1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/gridgain/commons-logging-1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/gridgain/jboss-serialization-1.0.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/gridgain/log4j-1.2.15.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
