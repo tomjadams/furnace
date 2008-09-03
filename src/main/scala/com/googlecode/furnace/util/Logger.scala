@@ -16,18 +16,24 @@
 
 package com.googlecode.furnace.util
 
+import org.apache.log4j.{Appender, PatternLayout, Level, BasicConfigurator}
 import Console._
-import org.apache.log4j.{BasicConfigurator, Level}
+import com.googlecode.furnace.util.javas.Enumeration._
 import org.apache.log4j.BasicConfigurator._
 import org.apache.log4j.Level._
 import org.apache.log4j.Logger._
 
 object Logger {
-  implicit lazy val logger = org.apache.log4j.Logger.getLogger("com.googlecode.furnace")
+  lazy val furnaceCategory = "com.googlecode.furnace"
+  lazy val rootLogger = getRootLogger
+  lazy val logger = org.apache.log4j.Logger.getLogger(furnaceCategory)
+  lazy val layout = new PatternLayout("[%d{yyyy-MM-dd HH:mm:ss}] %5p [%c{1}] - %m%n")
 
   def configureLogging {
     configure
-    getRootLogger.setLevel(WARN)
+    rootLogger.setLevel(WARN)
+    enumToList(rootLogger.getAllAppenders).asInstanceOf[List[Appender]].foreach(_.setLayout(layout))
+    getLogger(furnaceCategory).setLevel(INFO)
     configureGridGainLogging
   }
 
@@ -49,6 +55,10 @@ object Logger {
     getLogger("org.gridgain.grid.kernal.managers.discovery").setLevel(WARN)
     getLogger("org.gridgain.grid.spi.discovery.multicast").setLevel(WARN)
     getLogger("org.gridgain.grid.spi.discovery.jgroups").setLevel(WARN)
+    getLogger("org.gridgain.grid.spi.collision").setLevel(WARN)
+    getLogger("org.gridgain.grid.spi.failover").setLevel(WARN)
+    getLogger("org.gridgain.grid.spi.metrics").setLevel(WARN)
+    getLogger("org.gridgain.grid.spi.topology").setLevel(WARN)
     getLogger("org.springframework").setLevel(WARN)
   }
 }
