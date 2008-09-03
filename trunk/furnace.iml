@@ -53,12 +53,20 @@
           <root url="jar://$MODULE_DIR$/lib/gridgain/jms-1.1.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/gridgain/commons-logging-1.1.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/gridgain/jboss-serialization-1.0.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/gridgain/log4j-1.2.15.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
           <root url="jar://$MODULE_DIR$/etc/lib-src/gridgain-2.0.3-src.jar!/" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log4j">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/log4j/log4j-1.2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>

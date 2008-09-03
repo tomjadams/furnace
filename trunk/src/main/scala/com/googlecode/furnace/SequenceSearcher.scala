@@ -40,6 +40,7 @@ object SequenceSearcher {
   }
 
   def run(inputSequence: FilePath, database: FilePath, sliceSize: Int) {
+    configureLogging
     startMasterNode
     info("Processing sequence file: " + filePathToString(inputSequence) + ", slice size: " + sliceSize)
     val in = new FileInputStream(inputSequence)
