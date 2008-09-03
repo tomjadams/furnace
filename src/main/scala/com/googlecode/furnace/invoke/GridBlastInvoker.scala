@@ -16,18 +16,33 @@
 
 package com.googlecode.furnace.invoke
 
-import analyse.SequenceIdentifier
+import org.gridgain.grid.{GridJob, GridJobResult, GridTaskSplitAdapter}
+import analyse.{AnalysisResult, SequenceIdentifier}
+import java.util.{List => JavaList}
+import java.util.{Collection => JavaCollection}
+import java.util.Collections
 import sequence.GeneSequence
 import util.io.FilePath
 
+// implicit from this to GridJob?
 final class GridBlastInvoker extends Invoker {
   def invoke(identifier: SequenceIdentifier, database: FilePath, sequence: GeneSequence) = {
-//
-//    val input = sequence.write(identifier)
-//    val config = blastConfig(database, input)
-//    !blast(identifier, config)
+    //
+    //    val input = sequence.write(identifier)
+    //    val config = blastConfig(database, input)
+    //    !blast(identifier, config)
     error("Foo")
   }
 }
+
+final class ATask extends GridTaskSplitAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
+  def split(gridSize: Int, inputSequences: Iterator[GeneSequence]): JavaCollection[_ <: GridJob] = {
+    error("")
+  }
+
+  def reduce(results: JavaList[GridJobResult]): List[AnalysisResult] = error("")
+
+}
+
 
 
