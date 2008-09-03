@@ -34,6 +34,8 @@
   <property name="compile.deprecation" value="on"/>
   <property name="compile.force" value="never"/>
 
+  <property name="gridgain.dir" value="/opt/gridgain"/>
+
   <property name="blast.dir" value="/opt/blast"/>
   <property name="blast.bin.dir" value="${blast.dir}/bin"/>
   <property name="blast.data.dir" value="${blast.dir}/data"/>
