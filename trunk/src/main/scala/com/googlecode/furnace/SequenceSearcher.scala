@@ -18,14 +18,14 @@ package com.googlecode.furnace
 
 import analyse.AnalysisResult
 import analyse.SequenceIdentifier._
+import grid.GridBootstrapper._
+import invoke.LocalBlastInvoker
 import java.io.{File, FileInputStream}
 import java.lang.Integer.parseInt
-import invoke.LocalBlastInvoker
 import scalaz.OptionW._
 import scalaz.javas.InputStream._
 import parse.FastaParser
 import util.Logger, Logger._
-import util.grid.GridBootstrapper._
 import util.io.FilePath
 import util.io.FilePath._
 
