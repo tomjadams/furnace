@@ -23,8 +23,10 @@ import sequence.GeneSequence
 
 final class GeneSequenceGridTask extends GridTaskSplitAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
   def split(gridSize: Int, inputSequences: Iterator[GeneSequence]) = new AbstractList[GridJob] {
-    override def get(index: Int) = error("Not a grid job")
-    override def size = 1
+    override def isEmpty = !inputSequences.hasNext
+    override def iterator = error("Show me an iterator!")
+    override def size = error("Cannot call size() on this list")
+    override def get(index: Int) = error("Cannot call get() on this list")
   }
 
   def reduce(results: JavaList[GridJobResult]) = error("I'm not really a list")
