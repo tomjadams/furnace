@@ -22,6 +22,7 @@ import util.Logger, Logger._
 object GridBootstrapper {
   val stopAllJobs = true
 
+  // See: http://www.gridgainsystems.com/wiki/display/GG15UG/Topology+SPI
   def startMasterNode {
     info("Starting master grid node")
     start();
