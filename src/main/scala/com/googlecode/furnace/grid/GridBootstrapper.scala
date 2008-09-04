@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.googlecode.furnace.util.grid
+package com.googlecode.furnace.grid
 
 import org.gridgain.grid.GridFactory, GridFactory._
 import util.Logger, Logger._
