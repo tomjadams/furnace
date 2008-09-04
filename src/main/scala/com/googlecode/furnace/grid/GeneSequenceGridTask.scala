@@ -16,18 +16,18 @@
 
 package com.googlecode.furnace.grid
 
+import java.util.{AbstractList, List => JavaList}
 import org.gridgain.grid.{GridTaskSplitAdapter, GridJobResult, GridJob}
 import analyse.{AnalysisResult, SequenceIdentifier}
-import java.util.{List => JavaList}
-import java.util.{Collection => JavaCollection}
 import sequence.GeneSequence
 
 final class GeneSequenceGridTask extends GridTaskSplitAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
-  def split(gridSize: Int, inputSequences: Iterator[GeneSequence]): JavaCollection[_ <: GridJob] = {
-    error("")
+  def split(gridSize: Int, inputSequences: Iterator[GeneSequence]) = new AbstractList[GridJob] {
+    override def get(index: Int) = error("Not a grid job")
+    override def size = 1
   }
 
-  def reduce(results: JavaList[GridJobResult]): List[AnalysisResult] = error("")
+  def reduce(results: JavaList[GridJobResult]) = error("I'm not really a list")
 }
 
 object Gridity {
@@ -37,8 +37,7 @@ object Gridity {
   import sequence.GeneSequence._
   import sequence.Base
 
-
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     startMasterNode
     try {
       val future: GridTaskFuture[List[AnalysisResult]] = masterNode.execute(classOf[GeneSequenceGridTask], sequences("ACGT"));
