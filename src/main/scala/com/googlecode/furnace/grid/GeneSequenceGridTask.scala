@@ -16,44 +16,58 @@
 
 package com.googlecode.furnace.grid
 
-import java.util.{Set, AbstractSet, List => JavaList, AbstractMap, AbstractList}
+import org.gridgain.grid.resources.GridLoadBalancerResource
+import org.gridgain.grid.{GridTaskSplitAdapter, GridLoadBalancer, GridNode, GridJobResult, GridTaskAdapter, GridJob}
+import java.util.{Set, AbstractSet, Iterator => JavaIterator, List => JavaList, AbstractMap, AbstractList}
 import analyse.{AnalysisResult, SequenceIdentifier}
 import java.util.Map.Entry
-import org.gridgain.grid.{GridTaskSplitAdapter, GridNode, GridJobResult, GridTaskAdapter, GridJob}
 import sequence.GeneSequence
 
-final class DoesNotWorkGeneSequenceGridTask extends GridTaskSplitAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
-  def split(gridSize: Int, inputSequences: Iterator[GeneSequence]) = new AbstractList[GridJob] {
-    override def isEmpty = !inputSequences.hasNext
-    override def iterator = error("Show me an iterator!")
-    override def size = error("Cannot call size() on this list")
-    override def get(index: Int) = error("Cannot call get() on this list")
-  }
+final class GeneSequenceGridTask extends GridTaskAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
+  @GridLoadBalancerResource
+  val balancer: GridLoadBalancer = null
+
+  def map(subgrid: JavaList[GridNode], inputSequences: Iterator[GeneSequence]) =
+    new AbstractMap[GridJob, GridNode] {
+      override def entrySet: Set[Entry[GridJob, GridNode]] = new AbstractSet[Entry[GridJob, GridNode]] {
+        override def iterator: JavaIterator[Entry[GridJob, GridNode]] = new JavaIterator[Entry[GridJob, GridNode]] {
+          override def hasNext = inputSequences.hasNext
+
+          override def next: Entry[GridJob, GridNode] = {
+            val job = SequenceGridJob(inputSequences.next)
+            JobEntry(job, balancer.getBalancedNode(job))
+          }
+
+          override def remove = error("Removal not supported")
+        }
+
+        override def isEmpty = !inputSequences.hasNext
+
+        override def size = 1
+      }
+    }
 
   def reduce(results: JavaList[GridJobResult]) = error("I'm not really a list")
 }
 
-final class GeneSequenceGridTask extends GridTaskAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
+final case class JobEntry(job: GridJob, node: GridNode) extends Entry[GridJob, GridNode] {
+  def getKey = job
+  def getValue = node
+  def setValue(value: GridNode) = error("Not supported")
+}
 
-  def map(subgrid: JavaList[GridNode], arg: Iterator[GeneSequence]) =
-    new AbstractMap[GridJob, GridNode] {
-      override def entrySet: Set[Entry[GridJob, GridNode]] = {
-        println(">>>>>>>>> entrySet called")
-        new AbstractSet[Entry[GridJob, GridNode]] {
-          override def iterator: java.util.Iterator[Entry[GridJob, GridNode]] = error("Show me an iterator!")
-          override def size = error("Cannot call size() on this set")
-        }
-      }
-    }
+final case class SequenceGridJob(sequence: GeneSequence) extends GridJob {
+  import analyse.{AnalysisResult, OutputFormat, SequenceIdentifier}
+  import analyse.OutputFormat._
+  import analyse.SequenceIdentifier._
+  import analyse.blast.BlastAnalysisResult
+  import java.io.Serializable
+  import util.io.FilePath
+  import util.io.FilePath._
 
-  //  def split(gridSize: Int, inputSequences: Iterator[GeneSequence]) = new AbstractList[GridJob] {
-  //    override def isEmpty = !inputSequences.hasNext
-  //    override def iterator = error("Show me an iterator!")
-  //    override def size = error("Cannot call size() on this list")
-  //    override def get(index: Int) = error("Cannot call get() on this list")
-  //  }
+  override def cancel { }
 
-  def reduce(results: JavaList[GridJobResult]) = error("I'm not really a list")
+  override def execute = BlastAnalysisResult(id("/foo/bar.in", 0, 0), "/foo/bar.out", text)
 }
 
 object Gridity {
