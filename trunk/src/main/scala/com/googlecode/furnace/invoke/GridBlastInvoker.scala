@@ -30,6 +30,3 @@ final class GridBlastInvoker extends Invoker {
     error("Foo")
   }
 }
-
-
-
