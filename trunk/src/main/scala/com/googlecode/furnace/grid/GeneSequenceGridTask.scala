@@ -16,47 +16,19 @@
 
 package com.googlecode.furnace.grid
 
-import org.gridgain.grid.resources.GridLoadBalancerResource
-import org.gridgain.grid.{GridTaskSplitAdapter, GridLoadBalancer, GridNode, GridJobResult, GridTaskAdapter, GridJob}
-import java.util.{Set, AbstractSet, Iterator => JavaIterator, List => JavaList, AbstractMap, AbstractList}
 import analyse.{AnalysisResult, SequenceIdentifier}
-import java.util.Map.Entry
+import java.util.{List => JavaList}
+import org.gridgain.grid.{GridTaskSplitAdapter, GridJob, GridJobResult}
 import sequence.GeneSequence
 
-final class GeneSequenceGridTask extends GridTaskAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
-//  @GridLoadBalancerResource
-  var balancer: GridLoadBalancer = null
+final class GeneSequenceGridTask extends GridTaskSplitAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
+  def split(gridSize: Int, inputSequences: Iterator[GeneSequence]) = {
+    val jobs = new java.util.ArrayList[GridJob]
+    inputSequences.foreach(s => jobs.add(SequenceGridJob(s)))
+    jobs
+  }
 
-  def setBalancer(balancer: GridLoadBalancer) = { this.balancer = balancer }
-
-  def map(subgrid: JavaList[GridNode], inputSequences: Iterator[GeneSequence]) =
-    new AbstractMap[GridJob, GridNode] {
-      override def entrySet: Set[Entry[GridJob, GridNode]] = new AbstractSet[Entry[GridJob, GridNode]] {
-        override def iterator: JavaIterator[Entry[GridJob, GridNode]] = new JavaIterator[Entry[GridJob, GridNode]] {
-          override def hasNext = inputSequences.hasNext
-
-          override def next: Entry[GridJob, GridNode] = {
-            val job = SequenceGridJob(inputSequences.next)
-            val b = balancer.getBalancedNode(job)
-            JobEntry(job, b)
-          }
-
-          override def remove = error("Removal not supported")
-        }
-
-        override def isEmpty = !inputSequences.hasNext
-
-        override def size = 1
-      }
-    }
-
-  def reduce(results: JavaList[GridJobResult]) = error("I'm not really a list")
-}
-
-final case class JobEntry(job: GridJob, node: GridNode) extends Entry[GridJob, GridNode] {
-  def getKey = job
-  def getValue = node
-  def setValue(value: GridNode) = error("Not supported")
+  def reduce(results: JavaList[GridJobResult]) = error("")
 }
 
 final case class SequenceGridJob(sequence: GeneSequence) extends GridJob {
@@ -68,7 +40,8 @@ final case class SequenceGridJob(sequence: GeneSequence) extends GridJob {
   import util.io.FilePath
   import util.io.FilePath._
 
-  override def cancel { }
+  override def cancel {
+  }
 
   override def execute = BlastAnalysisResult(id("/foo/bar.in", 0, 0), "/foo/bar.out", text)
 }
@@ -83,14 +56,14 @@ object Gridity {
   def main(args: Array[String]): Unit = {
     startMasterNode
     try {
-      val future: GridTaskFuture[List[AnalysisResult]] = masterNode.execute(classOf[GeneSequenceGridTask], sequences("ACGT"));
+      val future: GridTaskFuture[List[AnalysisResult]] = masterNode.execute(classOf[GeneSequenceGridTask], sequences("ACGT", "ACGT"));
       val results: List[AnalysisResult] = future.get();
     } finally {
       stopMasterNode
     }
   }
 
-  private def sequences(sequence: String) = List(geneSequence(baseSeq(sequence))).elements
+  private def sequences(sequences: String*) = sequences.map(s => geneSequence(baseSeq(s))).elements
 
   private def baseSeq(bases: String): NonEmptyList[Base] = list(bases.map(_.toByte: Base).toList)
 }
