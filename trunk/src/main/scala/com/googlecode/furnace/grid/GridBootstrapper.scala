@@ -16,7 +16,9 @@
 
 package com.googlecode.furnace.grid
 
-import org.gridgain.grid.GridFactory, GridFactory._
+import org.gridgain.grid.spi.topology.basic.GridBasicTopologySpi
+import org.gridgain.grid.{GridConfigurationAdapter, GridFactory}
+import  GridFactory._
 import util.Logger, Logger._
 
 object GridBootstrapper {
@@ -25,7 +27,11 @@ object GridBootstrapper {
   // See: http://www.gridgainsystems.com/wiki/display/GG15UG/Topology+SPI
   def startMasterNode {
     info("Starting master grid node")
-    start();
+    val toplogy = new GridBasicTopologySpi
+    toplogy.setLocalNode(false)
+    val config = new GridConfigurationAdapter
+    config.setTopologySpi(toplogy)
+    start(config);
   }
 
   def stopMasterNode {
@@ -35,8 +41,8 @@ object GridBootstrapper {
 
   def masterNode = getGrid
 
-//            // Execute Hello World task.
-//            GridTaskFuture<Integer> future = grid.execute(GridHelloWorldTask.class, "Hello World");
-//            // Wait for task completion.
-//            int phraseLen = future.get();
+  //            // Execute Hello World task.
+  //            GridTaskFuture<Integer> future = grid.execute(GridHelloWorldTask.class, "Hello World");
+  //            // Wait for task completion.
+  //            int phraseLen = future.get();
 }
