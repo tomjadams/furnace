@@ -24,8 +24,10 @@ import java.util.Map.Entry
 import sequence.GeneSequence
 
 final class GeneSequenceGridTask extends GridTaskAdapter[Iterator[GeneSequence], List[AnalysisResult]] {
-  @GridLoadBalancerResource
-  val balancer: GridLoadBalancer = null
+//  @GridLoadBalancerResource
+  var balancer: GridLoadBalancer = null
+
+  def setBalancer(balancer: GridLoadBalancer) = { this.balancer = balancer }
 
   def map(subgrid: JavaList[GridNode], inputSequences: Iterator[GeneSequence]) =
     new AbstractMap[GridJob, GridNode] {
