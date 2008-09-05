@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!--
+    Default log4j configuration for GridGain.
+    Warn & higher go to std error, everything else to std out.
+    Note. Std out & error are redirected to file via gridgain.sh.
+    See http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html for pattern info
+-->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+    <!-- Configuration -->
+    <appender name="CONSOLE" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/opt/gridgain/log/gridgain.log"/>
+        <param name="MaxFileSize" value="10000KB"/>
+        <param name="MaxBackupIndex" value="5"/>
+        <param name="Append" value="true"/>
+        <param name="Threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %5p [%c{1}] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="DEBUG"/>
+            <param name="levelMax" value="INFO"/>
+        </filter>
+    </appender>
+    <appender name="CONSOLE_ERR" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/opt/gridgain/log/gridgain.err"/>
+        <param name="MaxFileSize" value="10000KB"/>
+        <param name="MaxBackupIndex" value="5"/>
+        <param name="Append" value="true"/>
+        <param name="Threshold" value="WARN"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %5p [%c{1}] - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- Turn off noisy infrastructure -->
+    <category name="org.gridgain">
+        <level value="WARN"/>
+    </category>
+    <category name="org.jboss.serial">
+        <level value="WARN"/>
+    </category>
+    <category name="org.jgroups.blocks.ConnectionTable">
+        <level value="FATAL"/>
+    </category>
+
+    <!-- Turn on application lifecycle notification -->
+    <category name="org.gridgain.grid.kernal">
+        <level value="INFO"/>
+    </category>
+    <category name="org.gridgain.grid.kernal.managers.discovery">
+        <level value="INFO"/>
+    </category>
+    <category name="org.gridgain.grid.kernal.managers.deployment">
+        <level value="INFO"/>
+    </category>
+    <category name="org.gridgain.grid.spi.discovery.jgroups">
+        <level value="INFO"/>
+    </category>
+
+    <!-- Debug logging -->
+    <category name="com.vlc.kahuna">
+    <level value="DEBUG"/>
+    </category>
+
+    <!-- Root logger -->
+    <root>
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="CONSOLE_ERR"/>
+    </root>
+
+</log4j:configuration>
