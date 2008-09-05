@@ -37,7 +37,8 @@ final class GeneSequenceGridTask extends GridTaskAdapter[Iterator[GeneSequence],
 
           override def next: Entry[GridJob, GridNode] = {
             val job = SequenceGridJob(inputSequences.next)
-            JobEntry(job, balancer.getBalancedNode(job))
+            val b = balancer.getBalancedNode(job)
+            JobEntry(job, b)
           }
 
           override def remove = error("Removal not supported")
